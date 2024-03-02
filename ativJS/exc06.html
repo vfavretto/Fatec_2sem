@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Calculadora de Salário</title>
+    </head>
+    <body>
+    
+      <label for="horasTrabalhadas">Horas Trabalhadas:</label>
+      <input type="number" id="horasTrabalhadas" placeholder="Digite as horas trabalhadas">
+    
+      <button onclick="calcularSalario()">Calcular</button>
+    
+      <div id="resultado"></div>
+    
+      <script>
+        function calcularSalario() {
+
+          var horasTrabalhadasInput = document.getElementById("horasTrabalhadas");
+          var horasTrabalhadas = parseFloat(horasTrabalhadasInput.value);
+    
+          var salarioPorHoraNormal = 10; 
+          var salarioPorHoraExtra = 30;
+          var horasNormais = Math.min(horasTrabalhadas, 40);
+          var horasExtras = Math.max(horasTrabalhadas - 40, 0);
+          var valorRefeicao = 1.5;
+    
+          var salarioBruto = (horasNormais * salarioPorHoraNormal) + (horasExtras * salarioPorHoraExtra);
+    
+          var descontoRefeicao = valorRefeicao;
+    
+          var salarioLiquido = salarioBruto - descontoRefeicao;
+    
+          var resultadoDiv = document.getElementById("resultado");
+          resultadoDiv.innerHTML = "<p>Horas trabalhadas: " + horasTrabalhadas + " horas</p>" +
+                                   "<p>Salário bruto: R$ " + salarioBruto.toFixed(2) + "</p>" +
+                                   "<p>Desconto da refeição: R$ " + descontoRefeicao.toFixed(2) + "</p>" +
+                                   "<p>Salário líquido: R$ " + salarioLiquido.toFixed(2) + "</p>";
+        }
+      </script>
+    
+    </body>
+    </html>
+    
