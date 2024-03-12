@@ -11,7 +11,7 @@ package Principal;
  */
 public class Pessoa {
     
-    // Atributos da Classe
+    // **********Atributos da Classe************
     
     private String nome;
     private String cpf;
@@ -21,8 +21,10 @@ public class Pessoa {
     private Pessoa pai;
     private Pessoa[] listaFilhos= new  Pessoa [10];
     private int qtdFilhos=0;
+    private Pessoa[] listaIrmaos = new Pessoa [10];
+    private int qtdIrmaos=0;
     
-    // CONSTRUTORES //
+    // ***********CONSTRUTORES************ //
     
     public Pessoa (String nome){
         this.nome = nome;
@@ -48,7 +50,7 @@ public class Pessoa {
         this.telefone = telefone;
     }
     
-    //************* GETTERS ***********
+    //************* GETTERS ***************
     
     public String getNome(){
         return this.nome;
@@ -72,13 +74,14 @@ public class Pessoa {
         return this.listaFilhos;
     }
     
-    //********** Setters ***********
+    //************** Setters *****************
     
     public void setNome(String nome){
         this.nome= nome;
     }
     public void setMae(Pessoa mae){
         this.mae=mae;
+        mae.addFilhos(this);
     }
     public void setPai(Pessoa pai){
         this.pai= pai;
@@ -95,8 +98,23 @@ public class Pessoa {
     
     // METODOS DE INTERFACE (filhos à lista)
     public void addFilhos(Pessoa filho){
+        
+        boolean encontrei = false;
+        for (int i = 0; i < 0; i++) {
+            if (filho.equals(listaFilhos[i]))
+                encontrei = true;
+        }
+        if (encontrei == false) {
+        
         listaFilhos[qtdFilhos]= filho;
         qtdFilhos ++;
+        }
+        this.mae.addFilhos(filho);
+    }
+    public void addIrmaos(Pessoa Irmao){
+        listaIrmaos[qtdIrmaos]=Irmao;
+        qtdIrmaos++;
+        this.mae.addFilhos(Irmao);
     }
     public String nomeFilhos(){
         // METODO PARA RETORNAR LISTA DE FILHOS
@@ -109,6 +127,20 @@ public class Pessoa {
                 mensagem+=", ";
         }
     }
+        return mensagem;
+    }
+    public String nomeIrmaos(){
+        String mensagem="Meus irmaos sao ";
+        int i;
+        for( i=0;i<qtdIrmaos;i++)
+        {
+            mensagem +=listaIrmaos[i].getNome();
+            if(i<qtdIrmaos){
+                mensagem+=", ";
+            }
+                
+        }
+        
         return mensagem;
     }
 }
