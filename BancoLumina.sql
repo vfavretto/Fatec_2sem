@@ -57,4 +57,4 @@ constraint FK_idEmpresa foreign key (idEmpresa) references Cnpj (idEmpresa)
 )
 
 
-/* Tabela? */
+select * from Cnpj
