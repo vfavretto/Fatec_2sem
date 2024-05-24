@@ -1,5 +1,5 @@
-/* Tabela CNPJ  */
-create table Cnpj (
+/* Tabela Empresa  */
+create table Empresa (
 idEmpresa int identity (1,1) , 
 CPF varchar (11),
 CNPJ varchar (14) not null,
@@ -24,6 +24,16 @@ imgEmpresa varchar (50),
 CEP varchar (9),
 constraint PK_idEmpresa primary key (idEmpresa)
 )
+/* Tabela Log */
+
+create table logSistema (
+idLog int identity (1, 1),
+idEmpresa int,
+Dtlog datetime default getdate(),
+operacao varchar(20),
+constraint PK_idLog primary key (idLog),
+constraint FK_idEmpresaLog foreign key (idEmpresa) References Empresa (idEmpresa)
+)
 
 /* Tabela Mensagem */
 
@@ -31,10 +41,11 @@ create table Mensagem (
 idMsg int identity (1,1),
 idEmpresaEnvia int,
 idEmpresaRecebe int,
+dtMensagem datetime default getdate(),
 mensagem varchar (500),
 constraint PK_idMsg primary key (idMsg),
-constraint FK_idEmpresaEnvia foreign key (idEmpresaEnvia) References Cnpj (idEmpresa),
-constraint FK_idEmpresaRecebe foreign key (idEmpresaRecebe) References Cnpj (idEmpresa),
+constraint FK_idEmpresaEnvia foreign key (idEmpresaEnvia) References Empresa (idEmpresa),
+constraint FK_idEmpresaRecebe foreign key (idEmpresaRecebe) References Empresa (idEmpresa),
 )
 
 /* Tabela Servicos */
@@ -53,8 +64,14 @@ idServ int,
 idEmpresa int,
 constraint PK_idProc primary key (idProc),
 constraint FK_idServ foreign key (idServ) references Servicos (idServ),
-constraint FK_idEmpresa foreign key (idEmpresa) references Cnpj (idEmpresa)
+constraint FK_idEmpresa foreign key (idEmpresa) references Empresa (idEmpresa)
 )
 
+-- Tabela Administrador
 
-select * from Cnpj
+create table Administrador(
+idAdm int identity (1, 1),
+usuario varchar (14),
+senha varchar (16),
+constraint PK_idAdm primary key (idAdm)
+)

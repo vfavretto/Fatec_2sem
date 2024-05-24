@@ -1,5 +1,6 @@
-use Lumina
-insert into Cnpj values ('35382746818',
+-- Tabela Empresa
+
+insert into Empresa values ('35382746818',
 '22333333444422',
 'Lumina LTDA',
 'Victor Favretto',
@@ -21,8 +22,7 @@ null,
 null,
 null)
 
-use Lumina
-insert into Cnpj values ('12345678900',
+insert into Empresa values ('12345678900',
 '99333333444455',
 'Julinha Jardinagens',
 'Julia Fernanda',
@@ -45,5 +45,51 @@ null,
 null)
 
 
-use Lumina
-insert into 
+/* Servicos */
+
+insert into Servicos values
+('Jardinagem'), ('Reciclagem'), ('Coleta Seletiva'),
+('Paineis Solares'), ('Documentação Eletrônica')
+
+
+-- Mensagem
+
+insert into Mensagem values
+(1, 2, GETDATE() , 'Olá Gostaríamos de entrar em contato para fechar negócios'),
+(2, 1, GETDATE() , 'Olá fico feliz em receber sua  mensagem, vamos marcar uma reunião para discutirmos mais detalhes'),
+(2, 1, GETDATE() , 'Outra mensagem para teste')
+
+
+
+-- Procura_Oferece
+
+insert into Procura_Oferece values
+(null, 2 )
+
+-- Administrador
+insert into Administrador values
+('AnaSuportes', 'ablubledasideais')
+
+-- Selects
+
+select REPLACE (nomeEmpresa, 'A', 'Z') from Empresa
+
+select LOWER (nomeResp) from Empresa
+
+select LEN ('Olá Gostaríamos de entrar em contato para fechar negócios')
+
+select distinct nomeEmpresa, UF from Empresa
+where UF = 'SP';
+
+select nomeResp, nomeEmpresa from Empresa
+order by nomeResp;
+
+
+select e.idEmpresa, count(Mensagem.idEmpresaEnvia) as msgEnviada
+from Empresa e
+inner join Mensagem  on e.idEmpresa = Mensagem.idEmpresaEnvia
+group by e.idEmpresa;
+
+select nomeEmpresa from Empresa e
+where Exists (select * from Mensagem m
+				where e.idEmpresa = m.idEmpresaRecebe) 
